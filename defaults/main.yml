@@ -1,0 +1,38 @@
+---
+teleport_version: "3.1.6"
+teleport_ent_url: "https://get.gravitational.com/teleport-ent-v3.1.6-linux-amd64-bin.tar.gz"
+teleport_bin_path: "/usr/local/bin/teleport"
+teleport_config_dir: "/etc/teleport"
+teleport_config_path: "/etc/teleport/teleport.yml"
+teleport_roles_dir: "/etc/teleport/roles"
+teleport_ssl_dir: "/etc/teleport/ssl"
+teleport_service_path: "/etc/systemd/system/teleport.service"
+
+# teleport configurations
+teleport_nodename: "graviton"
+teleport_data_dir: "/var/lib/teleport"
+teleport_connection_limits_max_connections: 1000
+teleport_connection_limits_max_users: 250
+
+teleport_log_output: stderr
+teleport_log_severity: ERROR
+
+teleport_storage_type: ""
+teleport_storage_region: ""
+teleport_storage_table_name: ""
+teleport_storage_audit_events_uri: ""
+teleport_storage_audit_sessions_uri: ""
+
+# auth service
+teleport_auth_service_enabled: no
+teleport_auth_service_cluster_name: "main"
+teleport_auth_service_listen_addr: "0.0.0.0:3025"
+
+# ssh i.e. node service
+teleport_ssh_service_enabled: yes
+teleport_ssh_service_listen_address: "0.0.0.0:3022"
+
+# proxy service
+teleport_proxy_service_enabled: no
+teleport_proxy_service_listen_addr: 0.0.0.0:3023
+teleport_proxy_service_web_listen_addr: 0.0.0.0:3080

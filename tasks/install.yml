@@ -1,0 +1,34 @@
+---
+- name: Install teleport
+  become: yes
+  command: "/tmp/teleport-ent/install"
+
+- name: Create user
+  user:
+    name: ubuntu
+
+- name: Create teleport variable directory
+  file:
+    path: "{{ teleport_data_dir }}"
+    owner: "ubuntu"
+    group: "ubuntu"
+    state: directory
+  become: yes
+
+- name: Create teleport ssl directory
+  file:
+    path: "{{ teleport_ssl_dir }}"
+    owner: "ubuntu"
+    group: "ubuntu"
+    state: directory
+  become: yes
+
+- name: Creating teleport unit file
+  template:
+    src: "teleport.service.j2"
+    dest: "{{ teleport_service_path }}"
+    force: true
+    owner: "ubuntu"
+    group: "ubuntu"
+    mode: "u=rw,g=rw,o=r"
+  become: true

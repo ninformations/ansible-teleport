@@ -1,0 +1,174 @@
+#jinja2: trim_blocks: True, lstrip_blocks: True
+{# 
+nested list items cannot templated correctly, so the tedious way of rendering
+item by item is done. In other words, do not use to_nice_yaml if a nested map
+contains a list such as 'teleport_ssh_service_commands.command'
+
+This template does not try to validate the configuration
+In case where values are not set, they fallback to teleport defaults
+unless customised defaults are provided in the 'defaults/main.yml'
+#}
+{{ ansible_managed | comment }}
+# refer to the link for each config explanation and purpose
+# https://gravitational.com/teleport/docs/admin-guide/#configuration
+
+teleport:
+  nodename: {{ teleport_nodename if teleport_nodename else ansible_hostname }}
+  data_dir: {{ teleport_data_dir }}
+  {% if teleport_auth_token is defined %}
+  auth_token: {{ teleport_auth_token }}
+  {% endif %}
+  {% if teleport_ca_pin is defined %}
+  ca_pin: {{ teleport_ca_pin }}
+  {% endif %}
+  advertise_ip: {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] | default('0.0.0.0') }}
+  auth_servers:
+    - {{ hostvars['auth-1']['ansible_default_ipv4']['address'] | default('0.0.0.0') }}:3025
+  connection_limits:
+    max_connections: {{ teleport_connection_limits_max_connections }}
+    max_users: {{ teleport_connection_limits_max_users }}
+  log:
+    output: {{ teleport_log_output }}
+    severity: {{ teleport_log_severity }}
+  storage:
+    type: {{ teleport_storage_type }}
+    region: {{ teleport_storage_region }}
+    table_name: {{ teleport_storage_table_name }}
+    audit_events_uri: 
+      {% for uri in teleport_storage_audit_events_uri %}
+      - {{ uri }}
+      {% endfor %}
+    audit_sessions_uri: {{ teleport_storage_audit_sessions_uri }}
+  {% if teleport_ciphers is defined %}
+  ciphers:
+    {% for cipher in teleport_ciphers %}
+    - {{ cipher }}
+    {% endfor %}
+  {% endif %}
+  {% if teleport_kex_algos is defined %}
+  kex_algos:
+    {% for kex_algo in teleport_kex_algos %}
+    - {{ kex_algo }}
+    {% endfor %}
+  {% endif %}
+  {% if teleport_mac_algos is defined %}
+  mac_algos:
+    {% for mac_algo in teleport_mac_algos %}
+    - {{ mac_algo }}
+    {% endfor %}
+  {% endif %}
+  {% if teleport_ciphersuites is defined %}
+  ciphersuites:
+    {% for ciphersuite in teleport_ciphersuites %}
+    - {{ ciphersuite }}
+    {% endfor %}
+  {% endif %}
+
+# configures the 'auth' server
+auth_service:
+  enabled: {{ teleport_auth_service_enabled }}
+  cluster_name: {{ teleport_auth_service_cluster_name }}
+  {% if teleport_auth_service_authentication is defined %}
+  authentication:
+    {{ teleport_auth_service_authentication | to_nice_yaml | indent(4) }}
+  {% endif %}
+  listen_addr: {{ teleport_auth_service_listen_addr }}
+  {% if teleport_auth_service_public_addr is defined %}
+  public_addr: {{ teleport_auth_service_public_addr }}
+  {% endif %}
+  {% if teleport_auth_service_tokens is defined %}
+  tokens:
+    {% for token in teleport_auth_service_tokens %}
+    - {{ token }}
+    {% endfor %}
+  {% endif %}
+  {% if teleport_auth_service_session_recording is defined %}
+  session_recording: {{ teleport_auth_service_session_recording }}
+  {% endif %}
+  {% if teleport_auth_service_proxy_checks_host_keys is defined %}
+  proxy_checks_host_keys: {{ teleport_auth_service_proxy_checks_host_keys }}
+  {% endif %}
+  {% if teleport_auth_service_client_idle_timeout is defined %}
+  client_idle_timeout: {{ teleport_auth_service_client_idle_timeout }}
+  {% endif %}
+  {% if teleport_auth_service_disconnect_expired_cert is defined %}
+  disconnect_expired_cert: {{ teleport_auth_service_disconnect_expired_cert }}
+  {% endif %}
+  {% if teleport_auth_service_license_file is defined %}
+  license_file: {{ teleport_auth_service_license_file }}
+  {% endif %}
+
+# configures the 'proxy' server
+proxy_service:
+  enabled: {{ teleport_proxy_service_enabled }}
+  {% if teleport_proxy_service_listen_addr is defined %}
+  listen_addr: {{ teleport_proxy_service_listen_addr }}
+  {% endif %}
+  {% if teleport_proxy_service_web_listen_addr is defined %}
+  web_listen_addr: {{ teleport_proxy_service_web_listen_addr }}
+  {% endif %}
+  {% if teleport_proxy_tunnel_listen_addr is defined %}
+  tunnel_listen_addr: {{ teleport_proxy_service_tunnel_listen_addr }}
+  {% endif %}
+  {% if teleport_proxy_service_public_addr is defined %}
+  public_addr: {{ teleport_proxy_service_public_addr }}
+  {% endif %}
+  {% if teleport_proxy_service_ssh_public_addr is defined %}
+  ssh_public_addr: {{ teleport_proxy_service_ssh_public_addr }}
+  {% endif %}
+  {% if teleport_proxy_service_https_key_file is defined %}
+  https_key_file: {{ teleport_proxy_service_key_file_path }}
+  {% endif %}
+  {% if teleport_proxy_service_https_cert_file is defined %}
+  https_cert_file: {{ teleport_proxy_service_cert_file_path }}
+  {% endif %}
+  {% if teleport_proxy_service_kubernetes is defined %}
+  kubernetes: 
+    {% if teleport_proxy_service_kubernetes.enabled is defined %}
+    enabled: {{ teleport_proxy_service_kubernetes.enabled }}
+    {% endif %}
+    {% if teleport_proxy_service_kubernetes.listen_addr is defined %}
+    listen_addr: {{ teleport_proxy_service_kubernetes.listen_addr }}
+    {% endif %}
+    {% if teleport_proxy_service_kubernetes.public_addr is defined %}
+    public_addr:
+      {% for addr in teleport_proxy_service_kubernetes.public_addr %}
+      - {{ addr }}
+      {% endfor %}
+    {% endif %}
+    {% if teleport_proxy_service_kubernetes.kubeconfig_file is defined %}
+    kubeconfig_file: {{ teleport_proxy_service_kubernetes.kubeconfig_file }}
+    {% endif %}
+  {% endif %}
+
+# configures the 'node' server
+ssh_service:
+  enabled: {{ teleport_ssh_service_enabled }}
+  {% if teleport_ssh_service_listen_addr is defined %}
+  listen_addr: {{ teleport_ssh_service_listen_addr }}
+  {% endif %}
+  {% if teleport_ssh_service_public_addr is defined %}
+  public_addr: {{ teleport_ssh_service_public_addr }}
+  {% endif %}
+  {% if teleport_ssh_service_labels is defined %}
+  labels:
+    {{ teleport_ssh_service_labels | to_nice_yaml | indent(4) }}
+  {% endif %}
+  {% if teleport_ssh_service_commands is defined %}
+  commands:
+    {% for commandItem in teleport_ssh_service_commands %}
+    - name: {{ commandItem.name }}
+      command:
+      {% for cmd in commandItem.command %}
+        - {{ cmd }}
+      {% endfor %}
+      period: {{ commandItem.period }}
+    {% endfor %}
+  {% endif %}
+  {% if teleport_ssh_service_permit_user_env is defined %}
+  permit_user_env: {{ teleport_ssh_service_permit_user_env }}
+  {% endif %}
+  {% if teleport_ssh_service_pam is defined %}
+  pam:
+    {{ teleport_ssh_service_pam | to_nice_yaml | indent(4) }}
+  {% endif %}

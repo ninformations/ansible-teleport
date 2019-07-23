@@ -1,0 +1,17 @@
+*.retry
+.DS_Store
+*.swp
+*password
+
+*.swo
+.vagrant/
+*.retry
+*.log
+*.swp
+*.swo
+*.idea
+.molecule
+.cache
+__pycache__/
+.pytest_cache
+.tox
