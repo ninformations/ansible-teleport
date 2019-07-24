@@ -2,3 +2,9 @@
 - name: Install teleport
   become: yes
   command: "/tmp/teleport-ent/install"
+
+- name: Remove teleport download
+  become: yes
+  file:
+    path: "/tmp/teleport"
+    state: absent
