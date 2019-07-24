@@ -4,7 +4,7 @@
 - name: Download teleport
   unarchive:
     remote_src: yes
-    src: "{{ teleport_ent_url }}"
+    src: "{{ teleport_url }}"
     dest: "/tmp"
   register: _download_teleport
   until: _download_teleport is success

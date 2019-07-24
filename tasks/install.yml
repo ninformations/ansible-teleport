@@ -1,7 +1,7 @@
 ---
 - name: Install teleport
   become: yes
-  command: "/tmp/teleport-ent/install"
+  command: "/tmp/teleport/install"
 
 - name: Remove teleport download
   become: yes
