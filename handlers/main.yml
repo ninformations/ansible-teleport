@@ -13,5 +13,4 @@
   become: true
   systemd:
     name: "teleport.service"
-    daemon-reload: yes
     state: reloaded
