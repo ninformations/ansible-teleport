@@ -17,11 +17,14 @@ teleport_connection_limits_max_users: 250
 teleport_log_output: stderr
 teleport_log_severity: ERROR
 
-teleport_storage_type: ""
-teleport_storage_region: ""
-teleport_storage_table_name: ""
-teleport_storage_audit_events_uri: ""
-teleport_storage_audit_sessions_uri: ""
+teleport_storage_type: "dynamodb"
+teleport_storage_region: "us-west-1"
+# table name in dynamodb to store HashKey
+# should be distinct from dynamodb audit events uri
+teleport_storage_table_name: "teleport_table"
+teleport_storage_audit_events_uri:
+  - 'dynamodb://audit_events.teleport'
+teleport_storage_audit_sessions_uri: "s3://example.com/teleport.sessions"
 
 # auth service
 teleport_auth_service_enabled: no
