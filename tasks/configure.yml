@@ -1,12 +1,4 @@
 ---
-- name: Getting public ip address
-  ipify_facts:
-  register: ip_info
-
-- name: Setting ip fact
-  set_fact:
-    public_ip: "{{ ip_info.ansible_facts.ipify_public_ip }}"
-
 - name: Creating teleport config directory
   become: yes
   file:
