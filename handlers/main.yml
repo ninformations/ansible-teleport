@@ -3,14 +3,13 @@
 # and existing clients to perform graceful restarts
 - name: restart teleport
   become: true
-  systemd:
-    name: "teleport.service"
-    daemon-reload: yes
+  service:
+    name: teleport
     enabled: yes
     state: restarted
 
 - name: reload teleport
   become: true
-  systemd:
-    name: "teleport.service"
+  service:
+    name: teleport
     state: reloaded
