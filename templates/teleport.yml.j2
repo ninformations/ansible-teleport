@@ -23,7 +23,9 @@ teleport:
   {% endif %}
   advertise_ip: {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] | default('0.0.0.0') }}
   auth_servers:
-    - {{ hostvars['auth-1']['ansible_default_ipv4']['address'] | default('0.0.0.0') }}:3025
+    {% for auth_server in groups['auth'] %}
+    - {{ hostvars[auth_server]['ansible_default_ipv4']['address'] | default('0.0.0.0') }}:3025
+    {% endfor %}
   connection_limits:
     max_connections: {{ teleport_connection_limits_max_connections }}
     max_users: {{ teleport_connection_limits_max_users }}
