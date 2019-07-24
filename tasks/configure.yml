@@ -29,6 +29,7 @@
 
 - name: Creating teleport unit file
   become: true
+  notify: restart teleport
   template:
     src: "teleport.service.j2"
     dest: "{{ teleport_service_path }}"
@@ -39,6 +40,7 @@
 
 - name: Creating teleport config
   become: yes
+  notify: reload teleport
   template:
     src: "teleport.yml.j2"
     dest: "{{ teleport_config_path }}"
