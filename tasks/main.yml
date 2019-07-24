@@ -1,13 +1,13 @@
 ---
-#- import_tasks: download.yml
-#  tags:
-#    - teleport_install
-#    - teleport_upgrade
-#
-#- import_tasks: install.yml
-#  tags:
-#    - teleport_install
-#    - teleport_upgrade
+- import_tasks: download.yml
+  tags:
+    - teleport_install
+    - teleport_upgrade
+
+- import_tasks: install.yml
+  tags:
+    - teleport_install
+    - teleport_upgrade
 
 - import_tasks: configure.yml
   tags:
