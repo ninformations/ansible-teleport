@@ -1,4 +1,16 @@
 ---
+- name: Create user
+  user:
+    name: ubuntu
+
+- name: Create teleport variable directory
+  become: yes
+  file:
+    path: "{{ teleport_data_dir }}"
+    owner: "ubuntu"
+    group: "ubuntu"
+    state: directory
+
 - name: Creating teleport config directory
   become: yes
   file:
@@ -6,6 +18,24 @@
     owner: "ubuntu"
     group: "ubuntu"
     state: directory
+
+- name: Create teleport ssl directory
+  become: yes
+  file:
+    path: "{{ teleport_ssl_dir }}"
+    owner: "ubuntu"
+    group: "ubuntu"
+    state: directory
+
+- name: Creating teleport unit file
+  become: true
+  template:
+    src: "teleport.service.j2"
+    dest: "{{ teleport_service_path }}"
+    force: true
+    owner: "ubuntu"
+    group: "ubuntu"
+    mode: "u=rw,g=rw,o=r"
 
 - name: Creating teleport config
   become: yes
