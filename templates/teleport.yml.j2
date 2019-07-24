@@ -32,6 +32,8 @@ teleport:
   log:
     output: {{ teleport_log_output }}
     severity: {{ teleport_log_severity }}
+  {# set storage config only in auth #}
+  {% if 'auth' in group_names and inventory_hostname == groups['auth'][0] %}
   storage:
     type: {{ teleport_storage_type }}
     region: {{ teleport_storage_region }}
@@ -41,6 +43,7 @@ teleport:
       - {{ uri }}
       {% endfor %}
     audit_sessions_uri: {{ teleport_storage_audit_sessions_uri }}
+  {% endif %}
   {% if teleport_ciphers is defined %}
   ciphers:
     {% for cipher in teleport_ciphers %}
