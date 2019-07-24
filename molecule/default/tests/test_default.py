@@ -10,9 +10,10 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 def test_teleport_installation(host):
     teleport_run = host.run("teleport version")
     tctl_run = host.run("tctl version")
+    teleport_download = host.file("/tmp/teleport")
 
-    assert 'Teleport Enterprise v3.1.6' in teleport_run.stdout
-    assert 'Teleport Enterprise v3.1.6' in tctl_run.stdout
+    assert 'Teleport v3.1.6' in teleport_run.stdout
+    assert 'Teleport v3.1.6' in tctl_run.stdout
 
 
 @pytest.mark.parametrize('path', [
