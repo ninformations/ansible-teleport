@@ -7,17 +7,32 @@ lint:
   name: yamllint
 platforms:
   - name: node-1
-    image: geerlingguy/docker-${MOLECULE_DISTRO:-ubuntu1804}-ansible:testing
     groups:
       - node
-  - name: proxy-1
     image: geerlingguy/docker-${MOLECULE_DISTRO:-ubuntu1804}-ansible:testing
+    command: ${MOLECULE_DOCKER_COMMAND:-"/sbin/init"}
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    pre_build_image: true
+  - name: proxy-1
     groups:
       - proxy
-  - name: auth-1
     image: geerlingguy/docker-${MOLECULE_DISTRO:-ubuntu1804}-ansible:testing
+    command: ${MOLECULE_DOCKER_COMMAND:-"/sbin/init"}
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    pre_build_image: true
+  - name: auth-1
     groups:
       - auth
+    image: geerlingguy/docker-${MOLECULE_DISTRO:-ubuntu1804}-ansible:testing
+    command: ${MOLECULE_DOCKER_COMMAND:-"/sbin/init"}
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    pre_build_image: true
 provisioner:
   name: ansible
   log: True
