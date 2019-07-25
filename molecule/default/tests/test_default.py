@@ -26,12 +26,17 @@ def test_teleport_directory(host, path):
     dir = host.file(path)
 
     assert dir.is_directory
+    assert dir.exists
     assert dir.user == 'ubuntu'
     assert dir.group == 'ubuntu'
 
 
-def test_teleport_running(host):
-    service = host.service('teleport')
+@pytest.mark.parametrize('path', [
+    '/etc/teleport/teleport.yml',
+    '/etc/systemd/system/teleport.service',
+])
+def test_teleport_files(host, path):
+    file = host.file(path)
 
-    assert service.is_running
-    assert service.is_enabled
+    assert file.is_file
+    assert file.exists
