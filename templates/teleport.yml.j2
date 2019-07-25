@@ -17,6 +17,8 @@ teleport:
   data_dir: {{ teleport_data_dir }}
   {% if teleport_auth_token is defined %}
   auth_token: {{ teleport_auth_token }}
+  {% else %}
+  auth_token: {{ hostvars[groups['auth'][0]]['join_token'] }}
   {% endif %}
   {% if teleport_ca_pin is defined %}
   ca_pin: {{ teleport_ca_pin }}
@@ -86,6 +88,8 @@ auth_service:
     {% for token in teleport_auth_service_tokens %}
     - {{ token }}
     {% endfor %}
+  {% else %}
+    - "auth,proxy,node:{{ hostvars[groups['auth'][0]]['join_token'] }}"
   {% endif %}
   {% if teleport_auth_service_session_recording is defined %}
   session_recording: {{ teleport_auth_service_session_recording }}

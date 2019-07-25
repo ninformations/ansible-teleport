@@ -27,6 +27,15 @@
     group: "ubuntu"
     state: directory
 
+# removes backslash to prevent a escape character from being generated
+# which can confuse ansible stdout
+- name: Generate join token
+  shell: 'openssl rand -base64 64 | tr -d \'
+  register: join_token
+
+- name: Set join token as fact
+  set_fact:
+    join_token: "{{ join_token.stdout }}"
 
 - name: Creating teleport config
   become: yes
