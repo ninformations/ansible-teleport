@@ -27,20 +27,9 @@
     group: "ubuntu"
     state: directory
 
-- name: Creating teleport unit file
-  become: true
-  notify: restart teleport
-  template:
-    src: "teleport.service.j2"
-    dest: "{{ teleport_service_path }}"
-    force: true
-    owner: "ubuntu"
-    group: "ubuntu"
-    mode: "u=rw,g=rw,o=r"
 
 - name: Creating teleport config
   become: yes
-  notify: reload teleport
   template:
     src: "teleport.yml.j2"
     dest: "{{ teleport_config_path }}"
@@ -48,3 +37,13 @@
     owner: "ubuntu"
     group: "ubuntu"
     mode: "u=r"
+
+- name: Creating teleport unit file
+  become: true
+  template:
+    src: "teleport.service.j2"
+    dest: "{{ teleport_service_path }}"
+    force: true
+    owner: "ubuntu"
+    group: "ubuntu"
+    mode: "u=rw,g=rw,o=r"

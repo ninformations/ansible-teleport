@@ -14,3 +14,4 @@
   systemd:
     name: "teleport.service"
     state: reloaded
+    enabled: yes
