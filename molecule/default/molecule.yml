@@ -38,6 +38,13 @@ provisioner:
   log: True
   options:
     v: True
+    tags: "teleport_install"
+  config_options:
+    defaults:
+      gathering: smart
+      fact_caching: jsonfile
+      fact_caching_connection: /tmp
+      fact_caching_timeout: 43200
   lint:
     name: ansible-lint
 verifier:
