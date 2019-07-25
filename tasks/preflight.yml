@@ -1,0 +1,16 @@
+---
+# cloudalchemy/ansible-node-exporter reference
+- name: Assert usage of systemd as an init system
+  assert:
+    that: ansible_service_mgr == 'systemd'
+    msg: "This role only works with systemd"
+
+- name: Check if teleport is installed
+  stat:
+    path: "/usr/local/bin/teleport"
+  register: _teleport_installed
+
+- name: Gather teleport version
+  when: _teleport_installed.stat.exists
+  command: "/usr/local/bin/teleport version"
+  register: _teleport_version_output

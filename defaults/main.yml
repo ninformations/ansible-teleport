@@ -1,5 +1,5 @@
 ---
-teleport_version: "3.1.6"
+teleport_version: "v3.1.6"
 teleport_url: "https://get.gravitational.com/teleport-v3.1.6-linux-amd64-bin.tar.gz"
 teleport_bin_path: "/usr/local/bin/teleport"
 teleport_config_dir: "/etc/teleport"

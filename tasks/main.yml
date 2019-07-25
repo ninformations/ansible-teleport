@@ -1,10 +1,16 @@
 ---
+- import_tasks: preflight.yml
+  tags:
+    - always
+
 - import_tasks: download.yml
+  when: (not _teleport_installed.stat.exists) or (_teleport_version_output.stdout.split(" ")[1] != teleport_version)
   tags:
     - teleport_install
     - teleport_upgrade
 
 - import_tasks: install.yml
+  when: (not _teleport_installed.stat.exists) or (_teleport_version_output.stdout.split(" ")[1] != teleport_version)
   tags:
     - teleport_install
     - teleport_upgrade
@@ -12,3 +18,4 @@
 - import_tasks: configure.yml
   tags:
     - teleport_install
+    - teleport_update
