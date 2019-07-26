@@ -18,14 +18,14 @@ teleport:
   {% if teleport_auth_token is defined %}
   auth_token: {{ teleport_auth_token }}
   {% else %}
-  auth_token: {{ hostvars[groups['auth'][0]]['join_token'] }}
+  auth_token: {{ hostvars[groups['teleport_auth'][0]]['join_token'] }}
   {% endif %}
   {% if teleport_ca_pin is defined %}
   ca_pin: {{ teleport_ca_pin }}
   {% endif %}
   advertise_ip: {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] | default('0.0.0.0') }}
   auth_servers:
-    {% for auth_server in groups['auth'] %}
+    {% for auth_server in groups['teleport_auth'] %}
     - {{ hostvars[auth_server]['ansible_default_ipv4']['address'] | default('0.0.0.0') }}:3025
     {% endfor %}
   connection_limits:
@@ -35,7 +35,7 @@ teleport:
     output: {{ teleport_log_output }}
     severity: {{ teleport_log_severity }}
   {# set storage config only in auth #}
-  {% if 'auth' in group_names and inventory_hostname == groups['auth'][0] %}
+  {% if 'teleport-auth' in group_names and inventory_hostname == groups['teleport-auth'][0] %}
   storage:
     type: {{ teleport_storage_type }}
     region: {{ teleport_storage_region }}
@@ -91,7 +91,7 @@ auth_service:
     {% endfor %}
   {% else %}
   tokens:
-    - "auth,proxy,node:{{ hostvars[groups['auth'][0]]['join_token'] }}"
+    - "auth,proxy,node:{{ hostvars[groups['teleport_auth'][0]]['join_token'] }}"
   {% endif %}
   {% if teleport_auth_service_session_recording is defined %}
   session_recording: {{ teleport_auth_service_session_recording }}
