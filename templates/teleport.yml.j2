@@ -35,7 +35,7 @@ teleport:
     output: {{ teleport_log_output }}
     severity: {{ teleport_log_severity }}
   {# set storage config only in auth #}
-  {% if 'teleport-auth' in group_names and inventory_hostname == groups['teleport-auth'][0] %}
+  {% if inventory_hostname == groups['teleport_auth'][0] %}
   storage:
     type: {{ teleport_storage_type }}
     region: {{ teleport_storage_region }}
