@@ -1,3 +1,5 @@
+#jinja2: trim_blocks: True, lstrip_blocks: True
+{{ ansible_managed | comment }}
 [Unit]
 Description=Teleport service
 After=network.target
@@ -8,11 +10,13 @@ Type=simple
 Restart=on-failure
 RestartSec=3
 ExecStart={{ teleport_bin_path }} start \
-    --config {{ teleport_config_path }} \
-    --pid-file=/var/run/teleport.pid \
-    --diag-addr=127.0.0.1:3000
+    --config={{ teleport_config_path }} \
+    --pid-file={{ teleport_pid_path }} \
+    {% if teleport_diag_enabled %}
+    --diag-addr={{ teleport_diag_listen_addr }}
+    {% endif %}
 ExecReload=/bin/kill -HUP $MAINPID
-PIDFile=/var/run/teleport.pid
+PIDFile={{ teleport_pid_path }}
 
 [Install]
 WantedBy=multi-user.target

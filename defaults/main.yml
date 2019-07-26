@@ -7,6 +7,9 @@ teleport_config_path: "/etc/teleport/teleport.yml"
 teleport_roles_dir: "/etc/teleport/roles"
 teleport_ssl_dir: "/etc/teleport/ssl"
 teleport_service_path: "/etc/systemd/system/teleport.service"
+teleport_pid_path: "/var/run/teleport.pid"
+teleport_diag_enabled: true
+teleport_diag_listen_addr: 127.0.0.0:3000
 
 # teleport configurations
 teleport_nodename: "graviton"
@@ -29,11 +32,11 @@ teleport_storage_audit_sessions_uri: "s3://example.com/teleport.sessions"
 # auth service
 teleport_auth_service_enabled: no
 teleport_auth_service_cluster_name: "main"
-teleport_auth_service_listen_addr: "0.0.0.0:3025"
+teleport_auth_service_listen_addr: 0.0.0.0:3025
 
 # ssh i.e. node service
 teleport_ssh_service_enabled: yes
-teleport_ssh_service_listen_address: "0.0.0.0:3022"
+teleport_ssh_service_listen_address: 0.0.0.0:3022
 
 # proxy service
 teleport_proxy_service_enabled: no
