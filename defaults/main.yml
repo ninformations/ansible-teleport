@@ -12,7 +12,6 @@ teleport_diag_enabled: true
 teleport_diag_listen_addr: 127.0.0.0:3000
 
 # teleport configurations
-teleport_nodename: "graviton"
 teleport_data_dir: "/var/lib/teleport"
 teleport_connection_limits_max_connections: 1000
 teleport_connection_limits_max_users: 250
