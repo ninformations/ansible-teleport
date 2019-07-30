@@ -95,9 +95,6 @@ auth_service:
     {% for token in teleport_auth_service_tokens %}
     - {{ token }}
     {% endfor %}
-  {% else %}
-  tokens:
-    - "auth,proxy,node:{{ hostvars[groups['teleport_auth'][0]]['join_token'] }}"
   {% endif %}
   {% if teleport_auth_service_session_recording is defined %}
   session_recording: {{ teleport_auth_service_session_recording }}
