@@ -23,10 +23,10 @@ teleport:
   {% if teleport_ca_pin is defined %}
   ca_pin: {{ teleport_ca_pin }}
   {% endif %}
-  advertise_ip: {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] | default('0.0.0.0') }}
+  advertise_ip: {{ hostvars[inventory_hostname]['public_ip'] | default('0.0.0.0') }}
   auth_servers:
     {% for auth_server in groups['teleport_auth'] %}
-    - {{ hostvars[auth_server]['ansible_default_ipv4']['address'] | default('0.0.0.0') }}:3025
+    - {{ hostvars[auth_server]['public_ip'] | default('0.0.0.0') }}:3025
     {% endfor %}
   connection_limits:
     max_connections: {{ teleport_connection_limits_max_connections }}

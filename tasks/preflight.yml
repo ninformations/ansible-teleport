@@ -14,3 +14,11 @@
   when: _teleport_installed.stat.exists
   command: "/usr/local/bin/teleport version"
   register: _teleport_version_output
+
+- name: Getting public ip address
+  ipify_facts:
+  register: ip_info
+
+- name: Setting ip fact
+  set_fact:
+    public_ip: "{{ ip_info.ansible_facts.ipify_public_ip }}"
