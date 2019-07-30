@@ -20,8 +20,8 @@ teleport:
   {% else %}
   auth_token: {{ hostvars[groups['teleport_auth'][0]]['join_token'] }}
   {% endif %}
-  {% if teleport_ca_pin is defined %}
-  ca_pin: {{ teleport_ca_pin }}
+  {% if hostvars[groups['teleport_auth'][0]]['ca_pin'] is defined %}
+  ca_pin: {{ hostvars[groups['teleport_auth'][0]]['ca_pin'] }}
   {% endif %}
   advertise_ip: {{ hostvars[inventory_hostname]['public_ip'] | default('0.0.0.0') }}
   auth_servers:
