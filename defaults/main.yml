@@ -31,7 +31,7 @@ teleport_auth_service_listen_addr: 0.0.0.0:3025
 
 # ssh i.e. node service
 teleport_ssh_service_enabled: yes
-teleport_ssh_service_listen_address: 0.0.0.0:3022
+teleport_ssh_service_listen_addr: 0.0.0.0:3022
 
 # proxy service
 teleport_proxy_service_enabled: no

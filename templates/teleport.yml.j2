@@ -13,7 +13,7 @@ unless customised defaults are provided in the 'defaults/main.yml'
 # https://gravitational.com/teleport/docs/admin-guide/#configuration
 
 teleport:
-  nodename: {{ teleport_nodename if teleport_nodename else ansible_hostname }}
+  nodename: {{ teleport_nodename if teleport_nodename is defined else ansible_hostname }}
   data_dir: {{ teleport_data_dir }}
   {% if teleport_auth_token is defined %}
   auth_token: {{ teleport_auth_token }}
@@ -80,7 +80,7 @@ teleport:
 # configures the 'auth' server
 auth_service:
   enabled: {{ teleport_auth_service_enabled }}
-  {% if teleport_auth_service_enabled %}}
+  {% if teleport_auth_service_enabled %}
   cluster_name: {{ teleport_auth_service_cluster_name }}
   {% if teleport_auth_service_authentication is defined %}
   authentication:
@@ -119,7 +119,7 @@ auth_service:
 # configures the 'proxy' server
 proxy_service:
   enabled: {{ teleport_proxy_service_enabled }}
-  {% if teleport_proxy_service_enabled %}}
+  {% if teleport_proxy_service_enabled %}
   {% if teleport_proxy_service_listen_addr is defined %}
   listen_addr: {{ teleport_proxy_service_listen_addr }}
   {% endif %}
@@ -164,7 +164,7 @@ proxy_service:
 # configures the 'node' server
 ssh_service:
   enabled: {{ teleport_ssh_service_enabled }}
-  {% if teleport_ssh_service_enabled %}}
+  {% if teleport_ssh_service_enabled %}
   {% if teleport_ssh_service_listen_addr is defined %}
   listen_addr: {{ teleport_ssh_service_listen_addr }}
   {% endif %}
