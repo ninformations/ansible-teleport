@@ -1,0 +1,60 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+lint:
+  name: yamllint
+platforms:
+  - name: node-1
+    groups:
+      - node
+    image: geerlingguy/docker-${MOLECULE_DISTRO:-ubuntu1804}-ansible:testing
+    command: ${MOLECULE_DOCKER_COMMAND:-"/sbin/init"}
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    pre_build_image: true
+  - name: proxy-1
+    groups:
+      - proxy
+    image: geerlingguy/docker-${MOLECULE_DISTRO:-ubuntu1804}-ansible:testing
+    command: ${MOLECULE_DOCKER_COMMAND:-"/sbin/init"}
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    pre_build_image: true
+  - name: auth-1
+    groups:
+      - auth
+    image: geerlingguy/docker-${MOLECULE_DISTRO:-ubuntu1804}-ansible:testing
+    command: ${MOLECULE_DOCKER_COMMAND:-"/sbin/init"}
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    pre_build_image: true
+provisioner:
+  name: ansible
+  log: True
+  inventory:
+    links:
+      hosts: inventory/hosts
+      group_vars: inventory/group_vars/
+      host_vars: inventory/host_vars/
+  options:
+    v: True
+    tags: "teleport_install"
+  config_options:
+    defaults:
+      gathering: smart
+      fact_caching: jsonfile
+      fact_caching_connection: /tmp
+      fact_caching_timeout: 43200
+  lint:
+    name: ansible-lint
+verifier:
+  name: testinfra
+  options:
+    v: 1
+  lint:
+    name: flake8

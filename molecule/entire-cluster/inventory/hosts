@@ -1,0 +1,15 @@
+[teleport:children]
+teleport_auth
+teleport_proxy
+teleport_node
+
+[teleport_auth]
+auth-1
+
+[teleport_proxy]
+proxy-1
+
+[teleport_node]
+node-1
+auth-1
+proxy-1
