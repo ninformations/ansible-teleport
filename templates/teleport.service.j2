@@ -12,6 +12,9 @@ RestartSec=3
 ExecStart={{ teleport_bin_path }} start \
     --config={{ teleport_config_path }} \
     --pid-file={{ teleport_pid_path }} \
+    {% if teleport_insecure %}
+    --insecure-no-tls \
+    {% endif %}
     {% if teleport_diag_enabled %}
     --diag-addr={{ teleport_diag_listen_addr }}
     {% endif %}
