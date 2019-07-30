@@ -43,6 +43,7 @@ teleport:
     {% endif %}
     {% if teleport_storage_table_name is defined %}
     table_name: {{ teleport_storage_table_name }}
+    {% endif %}
     audit_events_uri: 
       {% for uri in teleport_storage_audit_events_uri %}
       - {{ uri }}
