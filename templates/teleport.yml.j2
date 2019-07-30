@@ -38,13 +38,18 @@ teleport:
   {% if inventory_hostname == groups['teleport_auth'][0] %}
   storage:
     type: {{ teleport_storage_type }}
+    {% if teleport_storage_region is defined %}
     region: {{ teleport_storage_region }}
+    {% endif %}
+    {% if teleport_storage_table_name is defined %}
     table_name: {{ teleport_storage_table_name }}
     audit_events_uri: 
       {% for uri in teleport_storage_audit_events_uri %}
       - {{ uri }}
       {% endfor %}
+    {% if teleport_storage_audit_sessions_uri is defined %}
     audit_sessions_uri: {{ teleport_storage_audit_sessions_uri }}
+    {% endif %}
   {% endif %}
   {% if teleport_ciphers is defined %}
   ciphers:
