@@ -27,15 +27,32 @@
     group: "ubuntu"
     state: directory
 
-# removes backslash to prevent a escape character from being generated
-# which can confuse ansible stdout
-- name: Generate join token
-  shell: "openssl rand -base64 64 | tr -d \\\\n"
-  register: join_token
+- name: Generating join tokens
+  become: yes
+  run_once: true
+  command: tctl nodes add --ttl=60m --roles="auth,proxy,node"
+  register: tctl_result
 
-- name: Set join token as fact
+# Uses a Perl compatible regex (-P) for positive lookbehind
+- name: Grabbing token
+  run_once: true
+  shell: echo "{{ tctl_result.stdout }}" | grep -oP "(?<=--token=)[A-Za-z0-9]*"
+  register: token
+
+- name: Saving token
+  run_once: true
   set_fact:
-    join_token: "{{ join_token.stdout }}"
+    "join_token": "{{ token.stdout }}"
+
+- name: Grabbing CA pin
+  run_once: true
+  shell: echo "{{ tctl_result.stdout }}" | grep -oP "(?<=--ca-pin=)[A-Za-z0-9:]*"
+  register: ca_pin
+
+- name: Saving CA pin
+  run_once: true
+  set_fact:
+    "ca_pin": "{{ ca_pin.stdout }}"
 
 - name: Creating teleport config
   become: yes
