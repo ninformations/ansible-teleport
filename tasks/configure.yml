@@ -68,6 +68,7 @@
     owner: "ubuntu"
     group: "ubuntu"
     mode: "u=r"
+  notify: reload teleport
 
 - name: Creating teleport unit file
   become: true
@@ -78,3 +79,4 @@
     owner: "ubuntu"
     group: "ubuntu"
     mode: "u=rw,g=rw,o=r"
+  notify: restart teleport
