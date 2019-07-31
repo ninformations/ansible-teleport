@@ -2,6 +2,7 @@
 # TODO: delegating to localhost to reduce the number of downloads from
 # remote server
 - name: Download teleport
+  when: not ansible_check_mode
   unarchive:
     remote_src: yes
     src: "{{ teleport_url }}"
