@@ -31,7 +31,7 @@
   when: inventory_hostname == groups['teleport_auth'][0]
   become: yes
   run_once: true
-  command: tctl nodes add --ttl=60m --roles="auth,proxy,node"
+  command: tctl nodes add --ttl=10m --roles="auth,proxy,node"
   register: tctl_result
 
 # Uses a Perl compatible regex (-P) for positive lookbehind
