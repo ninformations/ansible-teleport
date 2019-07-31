@@ -28,6 +28,7 @@
     state: directory
 
 - name: Generating join tokens
+  when: inventory_name == groups['teleport_auth'][0]
   become: yes
   run_once: true
   command: tctl nodes add --ttl=60m --roles="auth,proxy,node"
@@ -35,21 +36,25 @@
 
 # Uses a Perl compatible regex (-P) for positive lookbehind
 - name: Grabbing token
+  when: inventory_name == groups['teleport_auth'][0]
   run_once: true
   shell: echo "{{ tctl_result.stdout }}" | grep -oP "(?<=--token=)[A-Za-z0-9]*"
   register: token
 
 - name: Saving token
+  when: inventory_name == groups['teleport_auth'][0]
   run_once: true
   set_fact:
     "join_token": "{{ token.stdout }}"
 
 - name: Grabbing CA pin
+  when: inventory_name == groups['teleport_auth'][0]
   run_once: true
   shell: echo "{{ tctl_result.stdout }}" | grep -oP "(?<=--ca-pin=)[A-Za-z0-9:]*"
   register: ca_pin
 
 - name: Saving CA pin
+  when: inventory_name == groups['teleport_auth'][0]
   run_once: true
   set_fact:
     "ca_pin": "{{ ca_pin.stdout }}"
