@@ -3,6 +3,8 @@
 # and existing clients to perform graceful restarts
 # It is important that 'restart' is async as restarting of teleport will
 # terminate existing connections (which are what ansible is using)
+# Although reload is handled gracefully by teleport, a restart prior to reload
+# will cause reload to fail, so we use async as well
 - name: restart teleport
   become: true
   async: 60
@@ -15,6 +17,8 @@
 
 - name: reload teleport
   become: true
+  async: 60
+  poll: 0
   systemd:
     name: "teleport.service"
     state: reloaded
