@@ -133,10 +133,10 @@ proxy_service:
   ssh_public_addr: {{ teleport_proxy_service_ssh_public_addr }}
   {% endif %}
   {% if teleport_proxy_service_https_key_file is defined %}
-  https_key_file: {{ teleport_proxy_service_https_key_file_path }}
+  https_key_file: {{ teleport_proxy_service_https_key_file }}
   {% endif %}
   {% if teleport_proxy_service_https_cert_file is defined %}
-  https_cert_file: {{ teleport_proxy_service_https_cert_file_path }}
+  https_cert_file: {{ teleport_proxy_service_https_cert_file }}
   {% endif %}
   {% if teleport_proxy_service_kubernetes is defined %}
   kubernetes: 
