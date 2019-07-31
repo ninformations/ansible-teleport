@@ -1,8 +1,12 @@
 ---
 # Use start and reload steps to allow new teleport clients to start
 # and existing clients to perform graceful restarts
+# It is important that 'restart' is async as restarting of teleport will
+# terminate existing connections (which are what ansible is using)
 - name: restart teleport
   become: true
+  async: 60
+  poll: 0
   systemd:
     name: "teleport.service"
     daemon-reload: yes
