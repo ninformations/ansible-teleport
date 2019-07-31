@@ -123,7 +123,7 @@ proxy_service:
   {% if teleport_proxy_service_web_listen_addr is defined %}
   web_listen_addr: {{ teleport_proxy_service_web_listen_addr }}
   {% endif %}
-  {% if teleport_proxy_tunnel_listen_addr is defined %}
+  {% if teleport_proxy_service_tunnel_listen_addr is defined %}
   tunnel_listen_addr: {{ teleport_proxy_service_tunnel_listen_addr }}
   {% endif %}
   {% if teleport_proxy_service_public_addr is defined %}
