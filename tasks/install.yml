@@ -1,13 +1,12 @@
 ---
 - name: Unpack teleport
   unarchive:
-    src: "/tmp/teleport-{{ teleport_version }}-{{ teleport_node_arch }}-bin.tar.gz"
+    src: "/tmp/teleport-ent-{{ teleport_version }}-{{ teleport_node_arch }}-bin.tar.gz"
     dest: "/tmp"
-    creates: "/tmp/teleport/"
 
 - name: Install teleport
   become: yes
-  command: "/tmp/teleport/install"
+  command: "/tmp/teleport-ent/install"
 
 - name: Remove teleport download
   become: yes

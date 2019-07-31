@@ -1,7 +1,7 @@
 ---
 - name: Download teleport archive to localhost
   get_url:
-    url: "https://get.gravitational.com/teleport-{{ teleport_version }}-{{ teleport_node_arch }}-bin.tar.gz"
+    url: "https://get.gravitational.com/teleport-ent-{{ teleport_version }}-{{ teleport_node_arch }}-bin.tar.gz"
     dest: "/tmp/"
   register: _download_teleport
   until: _download_teleport is success
