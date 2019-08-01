@@ -12,6 +12,7 @@
 
 - name: Gather teleport version
   when: _teleport_installed.stat.exists
+  changed_when: false
   command: "/usr/local/bin/teleport version"
   register: _teleport_version_output
 
