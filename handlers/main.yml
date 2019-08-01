@@ -4,6 +4,7 @@
 # It is important that 'restart' is async as restarting of teleport will
 # terminate existing connections (which are what ansible is using)
 - name: restart teleport
+  listen: "restart teleport"
   become: true
   async: 60
   poll: 0
@@ -21,3 +22,9 @@
     name: "teleport.service"
     state: reloaded
     enabled: yes
+
+- name: wait for teleport restart
+  listen: "restart teleport"
+  wait_for_connection:
+    timeout: 60
+    delay: 2
