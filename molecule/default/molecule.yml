@@ -36,6 +36,11 @@ platforms:
 provisioner:
   name: ansible
   log: True
+  inventory:
+    links:
+      hosts: inventory/hosts
+      group_vars: inventory/group_vars/
+      host_vars: inventory/host_vars/
   options:
     v: True
     tags: "teleport_install"
