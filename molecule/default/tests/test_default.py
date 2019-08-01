@@ -12,8 +12,8 @@ def test_teleport_installation(host):
     tctl_run = host.run("tctl version")
     teleport_download = host.file("/tmp/teleport")
 
-    assert 'Teleport v3.1.6' in teleport_run.stdout
-    assert 'Teleport v3.1.6' in tctl_run.stdout
+    assert 'v3.1.6' in teleport_run.stdout
+    assert 'v3.1.6' in tctl_run.stdout
     assert not teleport_download.exists
 
 
