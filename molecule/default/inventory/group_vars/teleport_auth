@@ -2,4 +2,4 @@ teleport_auth_service_enabled: yes
 teleport_auth_service_cluster_name: yes
 teleport_auth_service_authentication:
   type: local
-  second_factor: off
+  second_factor: "off"
