@@ -28,7 +28,7 @@
     state: directory
 
 - name: Copy license file
-  when: teleport_enterprise_mode
+  when: teleport_enterprise_mode and 'teleport_auth' in group_names
   copy:
     src: "{{ teleport_auth_service_license_src }}"
     dest: "{{ teleport_auth_service_license_file }}"
