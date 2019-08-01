@@ -44,7 +44,7 @@
   set_fact:
     "join_token": "{{ token.stdout }}"
 
-- name: Grabbing CA pin
+- name: Saving CA pin output
   when: inventory_hostname == groups['teleport_auth'][0] and teleport_use_ca_pin
   become: true
   command: tctl status

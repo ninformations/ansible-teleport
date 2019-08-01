@@ -43,6 +43,7 @@ provisioner:
       host_vars: inventory/host_vars/
   options:
     v: True
+    diff: True
     tags: "teleport_install"
   config_options:
     defaults:
