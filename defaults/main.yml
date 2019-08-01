@@ -15,7 +15,7 @@ teleport_use_ca_pin: yes
 
 # enterpise settings
 teleport_enterprise_mode: no
-teleport_auth_service_license_src: "files/license.pem"
+teleport_auth_service_license_src: "license.pem"
 
 # teleport configurations
 teleport_data_dir: "/var/lib/teleport"
