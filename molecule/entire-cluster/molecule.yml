@@ -8,7 +8,7 @@ lint:
 platforms:
   - name: node-1
     groups:
-      - node
+      - teleport_node
     image: geerlingguy/docker-${MOLECULE_DISTRO:-ubuntu1804}-ansible:testing
     command: ${MOLECULE_DOCKER_COMMAND:-"/sbin/init"}
     volumes:
@@ -17,7 +17,7 @@ platforms:
     pre_build_image: true
   - name: proxy-1
     groups:
-      - proxy
+      - teleport_proxy
     image: geerlingguy/docker-${MOLECULE_DISTRO:-ubuntu1804}-ansible:testing
     command: ${MOLECULE_DOCKER_COMMAND:-"/sbin/init"}
     volumes:
@@ -26,7 +26,7 @@ platforms:
     pre_build_image: true
   - name: auth-1
     groups:
-      - auth
+      - teleport_auth
     image: geerlingguy/docker-${MOLECULE_DISTRO:-ubuntu1804}-ansible:testing
     command: ${MOLECULE_DOCKER_COMMAND:-"/sbin/init"}
     volumes:
