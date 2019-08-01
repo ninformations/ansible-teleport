@@ -40,3 +40,9 @@ def test_teleport_files(host, path):
 
     assert file.is_file
     assert file.exists
+
+
+def test_teleport_package_removed(host):
+    package = host.file("/tmp/teleport-ent-v3.1.6-linux-amd64/")
+
+    assert not package.exists

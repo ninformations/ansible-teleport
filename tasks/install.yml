@@ -1,15 +1,20 @@
 ---
+- name: Create package dir
+  file:
+    path: "/tmp/teleport-ent-{{ teleport_version }}-{{ teleport_node_arch }}/"
+    state: directory
+
 - name: Unpack teleport
   unarchive:
     src: "/tmp/teleport-ent-{{ teleport_version }}-{{ teleport_node_arch }}-bin.tar.gz"
-    dest: "/tmp"
+    dest: "/tmp/teleport-ent-{{ teleport_version }}-{{ teleport_node_arch }}"
 
 - name: Install teleport
   become: yes
-  command: "/tmp/teleport-ent/install"
+  command: "/tmp/teleport-ent-{{ teleport_version }}-{{ teleport_node_arch }}/teleport-ent/install"
 
-- name: Remove teleport download
+- name: Remove teleport package
   become: yes
   file:
-    path: "/tmp/teleport"
+    path: "/tmp/teleport-ent-{{ teleport_version }}-{{ teleport_node_arch }}/"
     state: absent
