@@ -17,7 +17,7 @@
 
 - name: reload teleport
   become: true
-  when: not teleport_restarted
+  when: teleport_restarted is defined and not teleport_restarted
   systemd:
     name: "teleport.service"
     state: reloaded
