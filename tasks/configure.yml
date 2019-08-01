@@ -62,7 +62,7 @@
 - name: Saving CA pin
   when: not ca_pin_output is skipped
   set_fact:
-    "ca_pin": "{{ ca_pin_output.stderr_lines[3].split(' ')[1] }}"
+    "ca_pin": "{{ ca_pin_output.stdout_lines[3].split(' ')[2] }}"
 
 - name: Creating teleport config
   become: yes
