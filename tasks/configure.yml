@@ -30,25 +30,21 @@
 - name: Generating join tokens
   when: inventory_hostname == groups['teleport_auth'][0] and not teleport_auth_token is defined
   become: yes
-  no_log: yes
   command: tctl nodes add --ttl=10m --roles="auth,proxy,node"
   register: tctl_result
 
 # Uses a Perl compatible regex (-P) for positive lookbehind
 - name: Grabbing token
   when: not tctl_result is skipped
-  no_log: yes
   shell: echo "{{ tctl_result.stdout }}" | grep -oP "(?<=--token=)[A-Za-z0-9]*"
   register: token
 
 - name: Saving token
   when: not tctl_result is skipped
-  no_log: yes
   set_fact:
     "join_token": "{{ token.stdout }}"
 
 - name: Grabbing CA pin
-  no_log: yes
   when: inventory_hostname == groups['teleport_auth'][0] and teleport_use_ca_pin
   become: true
   command: tctl status
@@ -56,13 +52,11 @@
 
 - name: Saving CA pin
   when: not ca_pin_output is skipped
-  no_log: yes
   set_fact:
     "ca_pin": "{{ ca_pin_output.stderr_lines[3].split(' ')[1] }}"
 
 - name: Creating teleport config
   become: yes
-  no_log: yes
   template:
     src: "teleport.yml.j2"
     dest: "{{ teleport_config_path }}"
