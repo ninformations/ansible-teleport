@@ -1,5 +1,7 @@
 ---
 - name: Converge
   hosts: all
+  vars:
+    teleport_auth_token: "secret"
   roles:
     - role: teleport
