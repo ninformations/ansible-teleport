@@ -13,6 +13,10 @@ teleport_diag_listen_addr: 127.0.0.1:3000
 teleport_insecure: no
 teleport_use_ca_pin: yes
 
+# enterpise settings
+teleport_enterprise_mode: no
+teleport_auth_service_license_src: "files/license.pem"
+
 # teleport configurations
 teleport_data_dir: "/var/lib/teleport"
 teleport_connection_limits_max_connections: 1000

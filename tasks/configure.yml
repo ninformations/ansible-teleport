@@ -27,6 +27,15 @@
     group: "ubuntu"
     state: directory
 
+- name: Copy license file
+  when: teleport_enterprise_mode
+  copy:
+    src: "{{ teleport_auth_service_license_src }}"
+    dest: "{{ teleport_auth_service_license_file }}"
+    owner: "ubuntu"
+    group: "ubuntu"
+    mode: '0400'
+
 - name: Generating join tokens
   when: inventory_hostname == groups['teleport_auth'][0] and not teleport_auth_token is defined
   become: yes
