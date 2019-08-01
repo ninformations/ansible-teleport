@@ -9,7 +9,7 @@ teleport_ssl_dir: "/etc/teleport/ssl"
 teleport_service_path: "/etc/systemd/system/teleport.service"
 teleport_pid_path: "/var/run/teleport.pid"
 teleport_diag_enabled: true
-teleport_diag_listen_addr: 127.0.0.0:3000
+teleport_diag_listen_addr: 127.0.0.1:3000
 teleport_insecure: no
 
 # teleport configurations
