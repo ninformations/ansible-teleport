@@ -14,7 +14,7 @@ def test_teleport_installation(host):
 
     assert 'v3.1.6' in teleport_run.stdout
     assert 'v3.1.6' in tctl_run.stdout
-    assert not 'Enterprise' in teleport_run.stdout
+    assert 'Enterprise' not in teleport_run.stdout
     assert not package.exists
 
 

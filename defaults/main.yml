@@ -28,8 +28,8 @@ teleport_log_severity: ERROR
 teleport_storage_type: "dir"
 # setting events uri causes teleport to think that we are using an external audit uri
 # even though filepath is a default setting, so avoid setting it.
-#teleport_storage_audit_events_uri:
-#  - 'file://var/lib/teleport/events'
+# teleport_storage_audit_events_uri:
+#   - 'file://var/lib/teleport/events'
 
 # auth service
 teleport_auth_service_enabled: no

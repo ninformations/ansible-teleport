@@ -10,6 +10,10 @@
     dest: "/tmp/teleport-ent-{{ teleport_version }}-{{ teleport_node_arch }}"
 
 - name: Install teleport
+  when:
+    (not _teleport_installed.stat.exists) or
+    ( not _teleport_version_output.stdout |
+      regex_search('teleport enterprise ' + teleport_version, ignorecase=True) )
   become: yes
   command: "/tmp/teleport-ent-{{ teleport_version }}-{{ teleport_node_arch }}/teleport-ent/install"
 

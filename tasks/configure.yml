@@ -45,7 +45,11 @@
 # Uses a Perl compatible regex (-P) for positive lookbehind
 - name: Grabbing token
   when: not tctl_result is skipped
-  shell: echo "{{ tctl_result.stdout }}" | grep -oP "(?<=--token=)[A-Za-z0-9]*"
+  shell: |
+    set -o pipefail
+    echo "{{ tctl_result.stdout }}" | grep -oP "(?<=--token=)[A-Za-z0-9]*"
+  args:
+    executable: /bin/bash
   register: token
 
 - name: Saving token
