@@ -7,9 +7,6 @@
   when: >
     (not _teleport_installed.stat.exists) or
     ( not _teleport_version_output.stdout | regex_search(teleport_version, ignorecase=True) )
-  tags:
-    - teleport_install
-    - teleport_upgrade
 
 - import_tasks: install.yml
   when: >
@@ -17,9 +14,6 @@
     ((not _teleport_installed.stat.exists) or
     ( not _teleport_version_output.stdout |
       regex_search('teleport ' + teleport_version, ignorecase=True) ))
-  tags:
-    - teleport_install
-    - teleport_upgrade
 
 - import_tasks: install-ent.yml
   when: >
@@ -27,11 +21,5 @@
     ((not _teleport_installed.stat.exists) or
     ( not _teleport_version_output.stdout |
       regex_search('teleport enterprise ' + teleport_version, ignorecase=True) ))
-  tags:
-    - teleport_install
-    - teleport_upgrade
 
 - import_tasks: configure.yml
-  tags:
-    - teleport_install
-    - teleport_update

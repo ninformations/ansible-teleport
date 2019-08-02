@@ -44,7 +44,6 @@ provisioner:
   options:
     v: True
     diff: True
-    tags: "teleport_install"
   config_options:
     defaults:
       gathering: smart
