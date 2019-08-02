@@ -10,11 +10,12 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 def test_teleport_installation(host):
     teleport_run = host.run("teleport version")
     tctl_run = host.run("tctl version")
-    teleport_download = host.file("/tmp/teleport")
+    package = host.file("/tmp/teleport-v3.1.6-linux-amd64/")
 
     assert 'v3.1.6' in teleport_run.stdout
     assert 'v3.1.6' in tctl_run.stdout
-    assert not teleport_download.exists
+    assert not 'Enterprise' in teleport_run.stdout
+    assert not package.exists
 
 
 @pytest.mark.parametrize('path', [
@@ -40,9 +41,3 @@ def test_teleport_files(host, path):
 
     assert file.is_file
     assert file.exists
-
-
-def test_teleport_package_removed(host):
-    package = host.file("/tmp/teleport-ent-v3.1.6-linux-amd64/")
-
-    assert not package.exists
