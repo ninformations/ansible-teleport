@@ -4,5 +4,6 @@
   vars:
     teleport_auth_token: "secret"
     teleport_use_ca_pin: no
+    teleport_insecure: yes
   roles:
     - role: teleport
