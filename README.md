@@ -32,26 +32,26 @@ These values have an empty value in the Teleport Config column
 
 | Teleport Config | Var Name | Default Value | Description |
 |---------------- | -------- | ------------- | ----------- |
-| | `teleport_version` | `"v3.1.6"`| Teleport version to install. [Changelog](https://github.com/gravitational/teleport/blob/master/CHANGELOG.md) |
-| | `teleport_node_arch` | `"linux-amd64"`| [Teleport architecture to install](https://gravitational.com/teleport/download/) |
-| | `teleport_bin_path` | `"/usr/local/bin/teleport"`| Install path |
-| | `teleport_config_dir` | `"/etc/teleport"`| Config directory |
-| | `teleport_config_path` | `"/etc/teleport/teleport.yml"`| Config file path |
-| | `teleport_roles_dir` | `"/etc/teleport/roles"`| Role files directory. **FUTURE** |
-| | `teleport_ssl_dir` | `"/etc/teleport/ssl"`| Directory for https files |
-| | `teleport_service_path` | `"/etc/systemd/system/teleport.service"`| Systemd service file |
-| | `teleport_pid_path` | `"/var/run/teleport.pid"`| PID file for systemd service |
-| | `teleport_diag_enabled` | `true`| `--diag-addr` flag |
-| | `teleport_diag_listen_addr` | `127.0.0.1:3000`| `--diag-addr` flag value |
-| | `teleport_insecure` | `no`| `--insecure-no-tls` flag. Useful for testing role. Not recommended for production use |
-| | `teleport_use_ca_pin` | `yes`| Leave `teleport.ca_pin` unset which generates a warning from Teleport. Usefule for testing role. Not recommended for production use |
+| Role specific | `teleport_version` | `"v3.1.6"`| Teleport version to install. [Changelog](https://github.com/gravitational/teleport/blob/master/CHANGELOG.md) |
+| Role specific | `teleport_node_arch` | `"linux-amd64"`| [Teleport architecture to install](https://gravitational.com/teleport/download/) |
+| Role specific | `teleport_bin_path` | `"/usr/local/bin/teleport"`| Install path |
+| Role specific | `teleport_config_dir` | `"/etc/teleport"`| Config directory |
+| Role specific | `teleport_config_path` | `"/etc/teleport/teleport.yml"`| Config file path |
+| Role specific | `teleport_roles_dir` | `"/etc/teleport/roles"`| Role files directory. **FUTURE** |
+| Role specific | `teleport_ssl_dir` | `"/etc/teleport/ssl"`| Directory for https files |
+| Role specific | `teleport_service_path` | `"/etc/systemd/system/teleport.service"`| Systemd service file |
+| Role specific | `teleport_pid_path` | `"/var/run/teleport.pid"`| PID file for systemd service |
+| Role specific | `teleport_diag_enabled` | `true`| `--diag-addr` flag |
+| Role specific | `teleport_diag_listen_addr` | `127.0.0.1:3000`| `--diag-addr` flag value |
+| Role specific | `teleport_insecure` | `no`| `--insecure-no-tls` flag. Useful for testing role. Not recommended for production use |
+| Role specific | `teleport_use_ca_pin` | `yes`| Leave `teleport.ca_pin` unset which generates a warning from Teleport. Usefule for testing role. Not recommended for production use |
 | | `teleport_enterprise_mode` | `no`| Selects binary to download Selects binary to download. `no` uses OSS version |
 | `teleport.nodename` | `teleport_nodename` | `ansible_hostname` | |
 | `teleport.data_dir` | `teleport_data_dir` | `"/var/lib/teleport"`| |
 | `teleport.auth_token` | `teleport_auth_token` | `hostvars[groups['teleport_auth'][0]]['join_token']` | A random token will be generated on the root auth server |
 | `teleport.ca_pin` | nil | `hostvars[groups['teleport_auth'][0]]['ca_pin']`| Value from root auth server will be obtained and set |
-| `teleport.advertise_ip` | | teleport default | node public IP address |
-| `teleport.auth_servers` | | `<public_ip>:3025` | Public IP address of all servers part of the `teleport_auth` group, port 3025 |
+| `teleport.advertise_ip` | nil | teleport default | node public IP address |
+| `teleport.auth_servers` | nil | `<public_ip>:3025` | Public IP address of all servers part of the `teleport_auth` group, port 3025 |
 | `teleport.connection_limits.max_connections` | `teleport_connection_limits_max_connections` | `1000` | |
 | `teleport.connection_limits.max_users` | `teleport_connection_limits_max_users` | `250` | |
 | `teleport.log.output` | `teleport_log_output` | `stderr` | |
