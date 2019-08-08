@@ -3,6 +3,21 @@ Role Name
 
 A brief description of the role goes here.
 
+Usage
+-----
+Currently role is not published onto ansible-galaxy, so we pull it from this
+repository directly. Ensure you have the permissions to read the repository.
+```
+cat <EOF >> requirements.yml
+- src: git@github.com:madsonic/ansible-teleport.git
+  scm: git
+  version: master
+  name: teleport
+EOF
+
+ansible-galaxy install -r requirements.yml
+```
+
 Requirements
 ------------
 
