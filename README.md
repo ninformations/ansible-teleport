@@ -102,13 +102,44 @@ are used from other roles.
 
 Example Playbook
 ----------------
+The playbook below can be used to install/upgrade a teleport cluster and also for new nodes to join the cluster. Be sure to read the [upgrade notes](https://gravitational.com/teleport/docs/admin-guide/#upgrading-teleport) before performing an upgrade.
 
-Including an example of how to use your role (for instance, with variables
-passed in as parameters) is always nice for users too:
+> IMPORTANT This playbook does not scale down the auth server pool as dictated by the upgrade guide. 
 
-    - hosts: servers
-      roles:
-         - { role: teleport, x: 42 }
+Under certain scenario, the auth server might not be ready (e.g. restarts), because the role requires all members to contact the auth server, `wait_for` blocks the play from running until the root auth server is contactable.
+
+```
+---
+# at least 1 auth server must be up so that a short lived token can
+# be issued to other nodes who wants to join the cluster
+- hosts: teleport_auth
+  tasks:
+    - import_role:
+        name: teleport
+
+- hosts: teleport_proxy
+  tasks:
+    - wait_for:
+        host: "{{ hostvars[groups['teleport_auth'][0]]['public_ip'] }}"
+        port: 3025
+        timeout: 30
+        connect_timeout: 2
+        delay: 1
+    - import_role:
+        name: teleport
+
+- hosts: teleport_node
+
+  tasks:
+    - wait_for:
+        host: "{{ hostvars[groups['teleport_auth'][0]]['public_ip'] }}"
+        port: 3025
+        timeout: 30
+        connect_timeout: 2
+        delay: 1
+    - import_role:
+        name: teleport
+```
 
 License
 -------
