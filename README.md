@@ -28,7 +28,6 @@ Role Variables
 Most of the variables maps directly to those in [Teleport configuration
 file](https://gravitational.com/teleport/docs/admin-guide/#configuration-file).
 Otherwise, they maybe systemd service options, teleport configuration flags.
-These values have an empty value in the Teleport Config column
 
 | Teleport Config | Var Name | Default Value | Description |
 |---------------- | -------- | ------------- | ----------- |
