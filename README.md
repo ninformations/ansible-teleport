@@ -140,6 +140,6 @@ Under certain scenario, the auth server might not be ready (e.g. restarts), beca
         name: teleport
 ```
 
-License
--------
-
+Sponsor and Support
+-------------------
+<a href="https://www.buymeacoffee.com/geraldng" target="_blank"><img src="https://bmc-cdn.nyc3.digitaloceanspaces.com/BMC-button-images/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;"></a>
