@@ -17,6 +17,7 @@
     dest: "/tmp/"
   register: _download_teleport
   until: _download_teleport is success
+  become: true
   retries: 10
   delay: 2
   delegate_to: localhost
