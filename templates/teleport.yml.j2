@@ -16,7 +16,9 @@ teleport:
   nodename: {{ teleport_nodename if teleport_nodename is defined else ansible_hostname }}
   data_dir: {{ teleport_data_dir }}
   {% if teleport_auth_token is defined %}
+  {% if inventory_hostname != groups['teleport_auth'][0] %}
   auth_token: {{ teleport_auth_token }}
+  {% endif %}
   {% else %}
   auth_token: {{ hostvars[groups['teleport_auth'][0]]['join_token'] }}
   {% endif %}
